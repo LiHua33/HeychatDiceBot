@@ -7,7 +7,6 @@ import re
 HelloWorldCommandID = "1848340234200219648"
 RepeaterCommandID = "1848345518004043776"
 DiceCommandID = "1848338810582007808"
-BotID = 74508030
 
 def on_use_bot_command(data):
     meta = {}
