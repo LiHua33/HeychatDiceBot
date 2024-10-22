@@ -39,6 +39,7 @@ class UseCommandData(BaseModel):
     bot_id: int
     channel_base_info: ChannelBaseInfo
     command_info: CommandInfo
+    msg: str
     msg_id: str
     room_base_info: RoomBaseInfo
     send_time: int

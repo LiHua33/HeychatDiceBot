@@ -1,4 +1,4 @@
-HeyChatAPPToken = "xxxx"
+HeyChatAPPToken = "NzQ1MDgwMzA7MTcyOTUxMjgzNjU2OTAzMDE2MjszODYzMzMyMTY5NDE5NzM5NjY="
 
 WSS_URL = "wss://chat.xiaoheihe.cn/chatroom/ws/connect?"
 COMMON_PARAMS = "chat_os_type=bot&client_type=heybox_chat&chat_version=999.0.0&chat_version=1.24.5"
