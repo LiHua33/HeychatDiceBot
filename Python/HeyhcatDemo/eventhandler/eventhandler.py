@@ -56,10 +56,10 @@ def on_dice(meta, user_info):
     for i in range(len(html_compa)):
         msg = msg.replace(html_compa[i], raw_compa[i])
 
-    ndN_find_patter = r"(?<=/roll)\s?\d+\s?d\s?\d+"
-    ndN_str = re.findall(ndN_find_patter, msg)[0].strip()
-
     send_msg_list = []
+
+    ndN_find_patter = r"(?<=/roll)\s?\d+\s?d\s?\d+"
+    ndN_str = re.findall(ndN_find_patter, msg)
 
     at_user_nick_str = str(user_info.room_nickname)
     if not at_user_nick_str:
@@ -67,8 +67,13 @@ def on_dice(meta, user_info):
     at_user_str = '@{} \n\n'.format(at_user_nick_str) 
     send_msg_list.append(at_user_str)
 
-    n = int(ndN_str.split('d')[0].strip())
-    N = int(ndN_str.split('d')[1].strip())
+    if ndN_str:
+        ndN_str = ndN_str[0].strip()
+        n = int(ndN_str.split('d')[0].strip())
+        N = int(ndN_str.split('d')[1].strip())
+    else:
+        send_msg_list.append('Error: 输入参数非法')
+
     if n <= 0 or N <= 0:
         nN_error = True
         dice_result_str = 'Error: 输入参数非法'
