@@ -67,6 +67,8 @@ def on_dice(meta, user_info):
     at_user_str = '@{} \n\n'.format(at_user_nick_str) 
     send_msg_list.append(at_user_str)
 
+    n = 0
+    N = 0
     if ndN_str:
         ndN_str = ndN_str[0].strip()
         n = int(ndN_str.split('d')[0].strip())
