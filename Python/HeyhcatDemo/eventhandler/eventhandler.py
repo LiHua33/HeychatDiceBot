@@ -23,7 +23,8 @@ def on_use_bot_command(data):
         elif command_id == HelloWorldCommandID:
             on_helloWorld(meta)
         elif command_id == DiceCommandID:
-            on_dice(meta, user_info)
+            meta, msg = on_dice(meta, user_info)
+            send_req(meta, msg)
 
 def on_repeater(meta):
     req = model.ChannelImSendReq(
@@ -75,11 +76,13 @@ def on_dice(meta, user_info):
         N = int(ndN_str.split('d')[1].strip())
     else:
         send_msg_list.append('Error: 输入参数非法')
+        return (meta ,''.join(send_msg_list))
 
     if n <= 0 or N <= 0:
         nN_error = True
         dice_result_str = 'Error: 输入参数非法'
         send_msg_list.append(dice_result_str)
+        return (meta, ''.join(send_msg_list))
     else:
         nN_error = False
         dice_result = dice.Ndn(n, N)
@@ -89,6 +92,7 @@ def on_dice(meta, user_info):
 
     k_find_patter = "(?<={}".format(ndN_str)  + r")\s?[+-]\s?\d+"
     k_str = re.findall(k_find_patter, msg)
+
     if (k_str) and not nN_error:
         addsub_k = k_str[0].strip()
         addsub_str = re.findall(r"[+-]", addsub_k)[0].strip()
@@ -132,14 +136,21 @@ def on_dice(meta, user_info):
     send_msg_str = ''.join(send_msg_list)
 
     print(send_msg_str)
+    return (meta, send_msg_str)
     
+
+def send_req(meta, msg) -> None:
+    """
+    Send Request
+    """
     send_req = model.ChannelImSendReq(
-        msg = send_msg_str,
+        msg = msg,
         msg_type = model.MSG_TYPE_MDTEXT,
         channel_id = meta.channel_base_info.channel_id,
         room_id = meta.room_base_info.room_id,
     )
     common.common.SendMessage(send_req)
+
 
 class EventHandler:
     async def on_message(self, data):
